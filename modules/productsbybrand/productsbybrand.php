@@ -1,0 +1,10 @@
+<?php
+if(!defined('_PS_VERSION_')){
+    exit;
+}
+
+class ProductsByBrand extends Module
+{ 
+
+    
+}
