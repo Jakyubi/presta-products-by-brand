@@ -4,23 +4,25 @@ if(!defined('_PS_VERSION_')){
 }
 
 class ProductsByBrand extends Module
-{ 
+{
+
     public function __construct()
     {
         $this->name = 'productsbybrand';
         $this->tab = 'front_office_features';
+        $this->version = '1.0.0';
         $this->author = 'abc';
         $this->need_instance = 0;
         $this->ps_versions_compliancy = [
-            'min' => '8.0.0',
-            'max' => _PS_VERSION_,
+            'min' => '1.7.0.0',
+            'max' => _PS_VERSION_
         ];
         $this->bootstrap = true;
 
         parent::__construct();
 
         $this->displayName = $this->trans('Products by brand', [], 'Modules.Productsbybrand.Admin');
-        $this->description = $this->trans('This module lets you search for products of each brand', [], 'Modules.Productsbybrand.Admin');
+        $this->description = $this->trans('Show products by brand', [], 'Modules.Productsbybrand.Admin');
         $this->confirmUninstall = $this->trans('Are you sure to uninstall?', [], 'Modules.Productsbybrand.Admin');
 
         if(!Configuration::get('PRODUCTSBYBRAND_MODULE_NAME')){
@@ -33,19 +35,22 @@ class ProductsByBrand extends Module
     {
         return(
             parent::install()
-            && Configuration::updateValue('PRODUCTSBYBRAND_MODULE_NAME', 'Products by name')
+            && $this->registerHook('displayHome')
+            && Configuration::updateValue('PRODUCTSBYBRAND_MODULE_NAME', 'Products by brand')
         );
-
     }
 
     public function uninstall()
     {
-        return (
+        return(
             parent::uninstall()
             && Configuration::deleteByName('PRODUCTSBYBRAND_MODULE_NAME')
         );
-
     }
 
-    
+    public function hookDisplayHome($params)
+    {
+        return $this->display(__FILE__, 'views/template.tpl');
+    }
+
 }
