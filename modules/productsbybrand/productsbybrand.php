@@ -36,6 +36,7 @@ class ProductsByBrand extends Module
         return(
             parent::install()
             && $this->registerHook('displayHome')
+            && $this->registerHook('actionFrontControllerSetMedia')
             && Configuration::updateValue('PRODUCTSBYBRAND_MODULE_NAME', 'Products by brand')
         );
     }
@@ -45,6 +46,21 @@ class ProductsByBrand extends Module
         return(
             parent::uninstall()
             && Configuration::deleteByName('PRODUCTSBYBRAND_MODULE_NAME')
+        );
+    }
+
+    public function hookActionFrontControllerSetMedia($params)
+    {
+        $this->context->controller->registerJavascript(
+            'script-show-more-brands', 
+            'modules/'.$this->name.'/dist/js/app.bundle.js',
+            ['media'=>'all', 'priority' => 150]
+        );
+
+        $this->context->controller->registerStylesheet(
+            'style-show-more-brands', 
+            'modules/'.$this->name.'/dist/css/style.css',
+            ['media'=>'all', 'priority' => 150]
         );
     }
 
