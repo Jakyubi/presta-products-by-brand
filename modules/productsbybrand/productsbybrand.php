@@ -50,9 +50,20 @@ class ProductsByBrand extends Module
 
     public function hookDisplayHome($params)
     {
-        $brands = Manufacturer::getManufacturers(false, $this->context->language->id);
+        $brands = Manufacturer::getManufacturers(false, $this->context->language->id ,false);
+        $grouped = [];
+
+        foreach($brands as $brand){
+            $firstLetter = strtoupper(mb_substr($brand['name'], 0, 1, 'UTF-8'));
+            if(!isset($grouped[$firstLetter])){
+                $grouped[$firstLetter] = [];
+            }
+            $grouped[$firstLetter][] = $brand;
+        }
+
         $this->context->smarty->assign([
             'brands' => $brands,
+            'grouped_brands' => $grouped,
         ]);
         return $this->display(__FILE__, 'views/templates/hook/templateFront.tpl');
 
