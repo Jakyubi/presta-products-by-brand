@@ -50,7 +50,14 @@ class ProductsByBrand extends Module
 
     public function hookDisplayHome($params)
     {
-        return $this->display(__FILE__, 'views/template.tpl');
+        $brands = Manufacturer::getManufacturers(false, $this->context->language->id);
+        $this->context->smarty->assign([
+            'brands' => $brands,
+        ]);
+        return $this->display(__FILE__, 'views/templates/hook/templateFront.tpl');
+
     }
+}
+
 
 }
