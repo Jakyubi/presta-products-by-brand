@@ -60,4 +60,3 @@ class ProductsByBrand extends Module
 }
 
 
-}
