@@ -1,44 +1,49 @@
+.brands-container {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.brands-grid{
+    display: grid;
+    gap: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
 .brand-image{
-    max-width: 100%;
-    max-height: 100%;
     width: 100%;
     height: 100%;
     object-fit: contain;
 }   
 
 .brand-image-wrapper {
-    width: 120px;
-    height: 120px;
+    width: 100%;
+    padding-top: 100%;
+    position: relative;
     border: 1px solid rgb(201,201,201);
     background: #fff;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
     font-size: 14px;
     overflow: hidden;
     color: #666;
 }
 
 .brand-image-wrapper img{
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;}
+    position: absolute;
+    max-width: 80%;
+    max-height: 80%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    object-fit: contain;
+}
 
 .brand-item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 100%;
 }
 
 .brand-item.hidden {
     display: none;
 }
 
-@media (max-width: 576px) {
-    .brand-image {
-        height: 80px;
-    }
 }
 
