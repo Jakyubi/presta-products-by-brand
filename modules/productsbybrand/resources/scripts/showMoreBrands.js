@@ -5,11 +5,12 @@ document.addEventListener('DOMContentLoaded', function(){
     let showingAll = false;
 
     function initialVisibleCount(){
-        const width = window.innerWidth;
-        if (width <= 360) return 3;
-        if (width <= 576) return 4;
-        if (width <= 991) return 6;
-        return 8;
+        const containerWidth = container.clientWidth;
+        const gap = 10;
+        const minItemWidth = 120;
+        const columns = Math.floor((containerWidth + gap) / (minItemWidth + gap));
+        const rowsToShow = 2;
+        return columns * rowsToShow;
     }
 
     function adjustColumns(){
@@ -21,16 +22,23 @@ document.addEventListener('DOMContentLoaded', function(){
     }
 
     function updateVisibility(){
-        const items = document.querySelectorAll('.brands-grid .brand-item:not(.toggle-btn)');
+        const items = document.querySelectorAll('.brands-grid .brand-item');
         const visibleCount = initialVisibleCount();
+        let hiddenCount = 0;
+
         items.forEach((el, index) => {
             if(!showingAll && index >= visibleCount){
                 el.classList.add('hidden');
+                hiddenCount++;
             }else{
                 el.classList.remove('hidden');
             }
         });
-        button.textContent = showingAll ? 'Show less' : 'See more';
+        if(showingAll){
+            button.textContent = 'Show less';
+        } else {
+            button.textContent = `See more (${hiddenCount})`;
+        }
     }
 
     adjustColumns();

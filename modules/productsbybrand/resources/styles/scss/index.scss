@@ -45,5 +45,17 @@
     display: none;
 }
 
+
+.toggle-btn{
+    background: transparent;
+    color: #000;
+    text-align: center;
+    padding: 10px 0;
+    cursor: pointer;
+}
+.toggle-btn:hover {
+    background: #dfdfdf;
+    color: #000;
+}
 }
 
