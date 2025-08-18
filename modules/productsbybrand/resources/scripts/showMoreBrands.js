@@ -1,11 +1,35 @@
 document.addEventListener('DOMContentLoaded', function(){
     const button = document.getElementById('toggle-brands');
-    const hiddenItems = document.querySelectorAll('.brands-grid .brand-item.hidden:not(.toggle-btn)');
-    
-    button.addEventListener('click', function(){
-        const isHidden = hiddenItems[0].classList.contains('hidden');
+    const items = document.querySelectorAll('.brands-grid .brand-item:not(.toggle-btn)');
+    let showingAll = false;
 
-        hiddenItems.forEach(el => el.classList.toggle('hidden', !isHidden));
-        button.textContent = isHidden ? 'Show less' : 'See more';
+    function initialVisibleCount(){
+        const width = window.innerWidth;
+        if (width <= 576) return 4;
+        if (width <= 991) return 6;
+        return 8;
+    }
+
+    function updateVisibility(){
+        const visibleCount = initialVisibleCount();
+        items.forEach((el, index) => {
+            if(!showingAll && index >= visibleCount){
+                el.classList.add('hidden');
+            }else{
+                el.classList.remove('hidden');
+            }
+        });
+        button.textContent = showingAll ? 'Show less' : 'See more';
+    }
+
+    updateVisibility();
+
+    button.addEventListener('click', function() {
+        showingAll = !showingAll;
+        updateVisibility();
+    });
+
+    window.addEventListener('resize', function(){
+        if(!showingAll) updateVisibility();
     });
 });

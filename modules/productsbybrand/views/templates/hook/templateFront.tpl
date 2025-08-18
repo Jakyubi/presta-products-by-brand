@@ -3,7 +3,7 @@
 <div class="brands-container">
     <div class="brands-grid">
         {foreach $brands as $brand name=brands}
-        <div class="brand-item {if $smarty.foreach.brands.index >= 8}hidden{/if}">
+        <div class="brand-item">
             <div class="brand-image-wrapper">
                 <a href="{$link->getManufacturerLink($brand.id_manufacturer, $brand.link_rewrite)}">
                     <img src="{$link->getBaseLink()}/img/m/{$brand.id_manufacturer}.jpg" class="brand-image mb-1"alt="{$brand.name}" />
