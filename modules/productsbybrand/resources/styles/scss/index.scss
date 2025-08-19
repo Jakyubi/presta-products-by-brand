@@ -7,14 +7,8 @@
     display: grid;
     gap: 10px;
     width: 100%;
-    box-sizing: border-box;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
 }
-
-.brand-image{
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}   
 
 .brand-image-wrapper {
     width: 100%;
@@ -45,13 +39,14 @@
     display: none;
 }
 
-
 .toggle-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: transparent;
     color: #000;
-    text-align: center;
     font-weight: 400;
-    padding: 10px 0;
+    text-align: center;
     cursor: pointer;
 }
 .toggle-btn:hover {
@@ -65,5 +60,19 @@
     padding: 10px;
 }
 
+@media (max-width: 768px){
+    .brands-grid{
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    }
+    .toggle-btn{
+        grid-column: 1/-1;
+    }
+}
+
+@media (min-width: 769px){
+    .toggle-btn{
+        grid-column: span 2;
+    }
+}
 }
 

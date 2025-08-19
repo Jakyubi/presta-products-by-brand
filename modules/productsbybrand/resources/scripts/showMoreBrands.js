@@ -1,32 +1,26 @@
 document.addEventListener('DOMContentLoaded', function(){
-    const container = document.querySelector('.brands-container');
     const grid = document.querySelector('.brands-grid');
     const button = document.getElementById('toggle-brands');
     let showingAll = false;
 
-    function initialVisibleCount(){
-        const containerWidth = container.clientWidth;
-        const gap = 10;
-        const minItemWidth = 120;
-        const columns = Math.floor((containerWidth + gap) / (minItemWidth + gap));
-        const rowsToShow = 2;
-        return columns * rowsToShow;
-    }
-
-    function adjustColumns(){
-        const containerWidth = container.clientWidth;
-        const gap = 10;
-        const minItemWidth = 120;
-        const columns = Math.floor((containerWidth + gap) / (minItemWidth + gap));
-        grid.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
-    }
-
     function updateVisibility(){
-        const items = document.querySelectorAll('.brands-grid .brand-item');
-        const visibleCount = initialVisibleCount();
+        const items = Array.from(document.querySelectorAll('.brands-grid .brand-item'));
+        const gridStyle = getComputedStyle(grid);
+        const columns = gridStyle.gridTemplateColumns.split(' ').length;
+        let visibleCount;
+
+        if(window.innerWidth < 768){
+            visibleCount = columns * 4;
+            button.style.gridColumn = '1 / -1';
+        }else{
+            visibleCount = columns + (columns -2);
+            button.style.gridColumn = `span 2`;
+        }
+
         let hiddenCount = 0;
 
         items.forEach((el, index) => {
+            if(el.id === 'toggle-brands') return;
             if(!showingAll && index >= visibleCount){
                 el.classList.add('hidden');
                 hiddenCount++;
@@ -34,6 +28,18 @@ document.addEventListener('DOMContentLoaded', function(){
                 el.classList.remove('hidden');
             }
         });
+
+        if(!showingAll){
+            if(window.innerWidth >= 768){
+                const lastVisible = items[visibleCount - 1];
+                if(lastVisible) grid.insertBefore(button, lastVisible.nextSibling);
+            }else{
+                grid.appendChild(button);
+            }
+        }else{
+            grid.appendChild(button);
+        }
+
         if(showingAll){
             button.textContent = 'Show less';
         } else {
@@ -41,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function(){
         }
     }
 
-    adjustColumns();
+  
     updateVisibility();
 
     button.addEventListener('click', function() {
@@ -50,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function(){
     });
 
     window.addEventListener('resize', function(){
-        adjustColumns();
+
         if(!showingAll) updateVisibility();
     });
 });
