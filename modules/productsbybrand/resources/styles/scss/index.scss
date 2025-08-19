@@ -19,6 +19,11 @@
     font-size: 14px;
     overflow: hidden;
     color: #666;
+    transition: filter 0.3s ease
+}
+
+.brand-image-wrapper:hover{
+    filter: brightness(1.15);
 }
 
 .brand-image-wrapper img{
@@ -34,6 +39,7 @@
 .brand-item {
     width: 100%;
 }
+
 
 .brand-item.hidden {
     display: none;
@@ -114,6 +120,12 @@
 
 .brand-list-item {
     line-height: 2.0em;
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+
+.brand-list-item:hover {
+    color: #00c9c9;
 }
 
 @media (max-width: 1024px){
