@@ -74,5 +74,60 @@
         grid-column: span 2;
     }
 }
+
+
+
+
+.brands-by-letter-container{
+    display: flex;
+    justify-content: center ;
+    text-align: center;
+    margin-top: 40px;
 }
 
+.brands-by-letter-grid {
+    display: inline-block;
+    column-count: 9;
+    column-gap: 20px; 
+    text-align: left;
+}
+
+.letter-block{
+    break-inside: avoid;
+    margin-bottom: 20px
+}
+
+.letter-header {
+    font-size: 40px;
+    color: #000;
+    margin-bottom: 15px;
+}
+
+.letter-list {
+    padding-left: 0;
+    margin: 0;
+}
+
+.letter-item {
+    line-height: 1.4em;
+}
+
+@media (max-width: 1024px){
+    .brands-by-letter-grid{
+        column-count: 7;
+        column-gap: 15px;
+    }
+}
+
+@media (max-width: 768px){
+    .brands-by-letter-grid{
+        column-count: 4;
+        column-gap: 15px;
+    }
+}
+
+@media (max-width: 480px){
+    .brands-by-letter-grid{
+        column-count: 2;
+    }
+}

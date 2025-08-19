@@ -11,26 +11,26 @@
                     class="brand-image mb-1" alt="{$brand.name}" />
                 </div>
             </a>
-            </div>
+        </div>
         {/foreach}
 
         <button id="toggle-brands" class="btn btn-primary brand-item toggle-btn">See more</button>
-        </div>
+    </div>
 </div>
 
 
-
-<div class="container brands-by-letter">
+<div class="brands-by-letter-container">
     <div class="brands-by-letter-grid">
         {foreach $grouped_brands as $letter => $gBrands}
             <div class="letter-block">
                 <div class="letter-header">{$letter}</div>
-                <ul class="list-unstyled">
+                <ul class="letter-list list-unstyled">
                     {foreach $gBrands as $gBrand}
-                        <li>{$gBrand.name}</li>
+                        <li class="letter-item">{$gBrand.name}</li>
                     {/foreach}
                 </ul>
             </div>
         {/foreach}
     </div>
 </div>
+
