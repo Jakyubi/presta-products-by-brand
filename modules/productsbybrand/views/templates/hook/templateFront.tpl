@@ -7,14 +7,15 @@
         <div class="brand-item">
             <a href="{$link->getManufacturerLink($brand.id_manufacturer, $brand.link_rewrite)}">
                 <div class="brand-image-wrapper">
-                    <img src="{$link->getBaseLink()}/img/m/{$brand.id_manufacturer}.jpg" class="brand-image mb-1"alt="{$brand.name}" />
+                    <img src="{$link->getManufacturerImageLink($brand.id_manufacturer)}" 
+                    class="brand-image mb-1" alt="{$brand.name}" />
                 </div>
             </a>
             </div>
         {/foreach}
 
         </div>
-        <div id="toggle-brands" class="btn btn-primary brand-item toggle-btn">See more</div>
+        <button id="toggle-brands" class="btn btn-primary brand-item toggle-btn">See more</button>
 </div>
 
 
