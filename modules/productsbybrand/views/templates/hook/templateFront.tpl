@@ -2,7 +2,9 @@
 
 <div class="brands-container">
 <div class="grid-title">Search for products by brand</div>
-    <div class="brands-grid">
+    <div class="brands-grid"
+        data-desktop-rows="{$desktopRows}"
+        data-mobile-rows="{$mobileRows}">
         {foreach $brands as $brand}
         <div class="brand-item">
             <a href="{$link->getManufacturerLink($brand.id_manufacturer, $brand.link_rewrite)}">

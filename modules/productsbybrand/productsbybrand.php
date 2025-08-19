@@ -38,6 +38,9 @@ class ProductsByBrand extends Module
             && $this->registerHook('displayHome')
             && $this->registerHook('actionFrontControllerSetMedia')
             && Configuration::updateValue('PRODUCTSBYBRAND_MODULE_NAME', 'Products by brand')
+            && Configuration::updateValue('PRODUCTSBYBRAND_MODULE_ENABLE', 1)
+            && Configuration::updateValue('PRODUCTSBYBRAND_DESKTOP_ROWS', 2)
+            && Configuration::updateValue('PRODUCTSBYBRAND_MOBILE_ROWS', 4)
         );
     }
 
@@ -85,6 +88,8 @@ class ProductsByBrand extends Module
         $this->context->smarty->assign([
             'brands' => $brands,
             'grouped_brands' => $grouped,
+            'desktopRows' => (int) Configuration::get('PRODUCTSBYBRAND_DESKTOP_ROWS', 2),
+            'mobileRows' => (int) Configuration::get('PRODUCTSBYBRAND_MOBILE_ROWS', 4), 
         ]);
         return $this->display(__FILE__, 'views/templates/hook/templateFront.tpl');
 
@@ -95,8 +100,13 @@ class ProductsByBrand extends Module
     {
         if(Tools::isSubmit('submitProductsbybrandSettingsForm')){
             $enabled = Tools::getValue('PRODUCTSBYBRAND_MODULE_ENABLE');
+            $desktopRows = Tools::getValue('PRODUCTSBYBRAND_DESKTOP_ROWS');
+            $mobileRows = Tools::getValue('PRODUCTSBYBRAND_MOBILE_ROWS');
+
 
             Configuration::updateValue('PRODUCTSBYBRAND_MODULE_ENABLE', $enabled);
+            Configuration::updateValue('PRODUCTSBYBRAND_DESKTOP_ROWS', $desktopRows);
+            Configuration::updateValue('PRODUCTSBYBRAND_MOBILE_ROWS', $mobileRows);
         }
 
         $this->context->smarty->assign([
@@ -132,6 +142,16 @@ class ProductsByBrand extends Module
                             ],
                         ],
                     ],
+                    [
+                        'type' => 'text',
+                        'label' => $this->l('Visible rows on desktop'),
+                        'name' => 'PRODUCTSBYBRAND_DESKTOP_ROWS',
+                    ],
+                    [
+                        'type' => 'text',
+                        'label' => $this->l('Visible rows on mobile'),
+                        'name' => 'PRODUCTSBYBRAND_MOBILE_ROWS',
+                    ],
                 ],
                 'submit' => [
                     'title' => $this->l('Save'),
@@ -152,7 +172,13 @@ class ProductsByBrand extends Module
         $helper->default_form_language = (int) Configuration::get('PS_LANG_DEFAULT');
 
         $helper->fields_value['PRODUCTSBYBRAND_MODULE_ENABLE'] = 
-        Tools::getValue('PRODUCTSBYBRAND_MODULE_ENABLE', Configuration::get('PRODUCTSBYBRAND_MODULE_ENABLE'));
+        Tools::getValue('PRODUCTSBYBRAND_MODULE_ENABLE', Configuration::get('PRODUCTSBYBRAND_MODULE_ENABLE'), 1);
+
+        $helper->fields_value['PRODUCTSBYBRAND_DESKTOP_ROWS'] = 
+        Tools::getValue('PRODUCTSBYBRAND_DESKTOP_ROWS', Configuration::get('PRODUCTSBYBRAND_DESKTOP_ROWS'), 2);
+
+        $helper->fields_value['PRODUCTSBYBRAND_MOBILE_ROWS'] = 
+        Tools::getValue('PRODUCTSBYBRAND_MOBILE_ROWS', Configuration::get('PRODUCTSBYBRAND_MOBILE_ROWS'), 4);
 
         return $helper->generateForm([$form]);
 

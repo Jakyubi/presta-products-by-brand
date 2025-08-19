@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', function(){
     const grid = document.querySelector('.brands-grid');
+    const desktopRows = parseInt(grid.dataset.desktopRows, 10);
+    const mobileRows = parseInt(grid.dataset.mobileRows, 10);
     const button = document.getElementById('toggle-brands');
     let showingAll = false;
 
@@ -10,10 +12,10 @@ document.addEventListener('DOMContentLoaded', function(){
         let visibleCount;
 
         if(window.innerWidth < 768){
-            visibleCount = columns * 4;
+            visibleCount = columns * mobileRows;
             button.style.gridColumn = '1 / -1';
         }else{
-            visibleCount = columns + (columns -2);
+            visibleCount = columns * desktopRows - 2;
             button.style.gridColumn = `span 2`;
         }
 
