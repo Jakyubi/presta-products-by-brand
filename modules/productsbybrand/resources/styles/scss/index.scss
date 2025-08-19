@@ -119,12 +119,16 @@
 }
 
 .brand-list-item {
-    line-height: 2.0em;
-    transition: color 0.3s ease;
-    cursor: pointer;
+    line-height: 2em;   
 }
 
-.brand-list-item:hover {
+.brand-list-item a{
+    color:#666;
+    text-decoration: none;
+    transition: color 0.3s ease
+}
+
+.brand-list-item a:hover {
     color: #00c9c9;
 }
 

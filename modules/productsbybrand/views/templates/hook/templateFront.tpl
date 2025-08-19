@@ -3,7 +3,7 @@
 <div class="brands-container">
 <div class="grid-title">Search for products by brand</div>
     <div class="brands-grid">
-        {foreach $brands as $brand name=brands}
+        {foreach $brands as $brand}
         <div class="brand-item">
             <a href="{$link->getManufacturerLink($brand.id_manufacturer, $brand.link_rewrite)}">
                 <div class="brand-image-wrapper">
@@ -26,7 +26,11 @@
                 <div class="letter-header">{$letter}</div>
                 <ul class="brand-list list-unstyled">
                     {foreach $gBrands as $gBrand}
-                        <li class="brand-list-item">{$gBrand.name}</li>
+                        <li class="brand-list-item">
+                            <a href="{$link->getManufacturerLink($gBrand.id_manufacturer, $gBrand.link_rewrite)}">
+                            {$gBrand.name}
+                            </a>
+                        </li>
                     {/foreach}
                 </ul>
             </div>
