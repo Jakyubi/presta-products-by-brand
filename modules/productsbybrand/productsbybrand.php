@@ -39,6 +39,8 @@ class ProductsByBrand extends Module
             && $this->registerHook('actionFrontControllerSetMedia')
             && Configuration::updateValue('PRODUCTSBYBRAND_MODULE_NAME', 'Products by brand')
             && Configuration::updateValue('PRODUCTSBYBRAND_MODULE_ENABLE', 1)
+            && Configuration::updateValue('PRODUCTSBYBRAND_GRID_ENABLE', 1)
+            && Configuration::updateValue('PRODUCTSBYBRAND_LIST_ENABLE', 1)
             && Configuration::updateValue('PRODUCTSBYBRAND_DESKTOP_ROWS', 2)
             && Configuration::updateValue('PRODUCTSBYBRAND_MOBILE_ROWS', 4)
         );
@@ -49,6 +51,11 @@ class ProductsByBrand extends Module
         return(
             parent::uninstall()
             && Configuration::deleteByName('PRODUCTSBYBRAND_MODULE_NAME')
+            && Configuration::deleteByName('PRODUCTSBYBRAND_MODULE_ENABLE')
+            && Configuration::deleteByName('PRODUCTSBYBRAND_GRID_ENABLE')
+            && Configuration::deleteByName('PRODUCTSBYBRAND_LIST_ENABLE')
+            && Configuration::deleteByName('PRODUCTSBYBRAND_DESKTOP_ROWS')
+            && Configuration::deleteByName('PRODUCTSBYBRAND_MOBILE_ROWS')
         );
     }
 
@@ -90,6 +97,8 @@ class ProductsByBrand extends Module
             'grouped_brands' => $grouped,
             'desktopRows' => (int) Configuration::get('PRODUCTSBYBRAND_DESKTOP_ROWS', 2),
             'mobileRows' => (int) Configuration::get('PRODUCTSBYBRAND_MOBILE_ROWS', 4), 
+            'gridEnabled' => (int) Configuration::get('PRODUCTSBYBRAND_GRID_ENABLE', 1), 
+            'listEnabled' => (int) Configuration::get('PRODUCTSBYBRAND_LIST_ENABLE', 1), 
         ]);
         return $this->display(__FILE__, 'views/templates/hook/templateFront.tpl');
 
@@ -99,12 +108,16 @@ class ProductsByBrand extends Module
     public function getContent()
     {
         if(Tools::isSubmit('submitProductsbybrandSettingsForm')){
-            $enabled = Tools::getValue('PRODUCTSBYBRAND_MODULE_ENABLE');
+            $moduleEnabled = Tools::getValue('PRODUCTSBYBRAND_MODULE_ENABLE');
+            $gridEnabled = Tools::getValue('PRODUCTSBYBRAND_GRID_ENABLE');
+            $listEnabled = Tools::getValue('PRODUCTSBYBRAND_LIST_ENABLE');
             $desktopRows = Tools::getValue('PRODUCTSBYBRAND_DESKTOP_ROWS');
             $mobileRows = Tools::getValue('PRODUCTSBYBRAND_MOBILE_ROWS');
 
 
-            Configuration::updateValue('PRODUCTSBYBRAND_MODULE_ENABLE', $enabled);
+            Configuration::updateValue('PRODUCTSBYBRAND_MODULE_ENABLE', $moduleEnabled);
+            Configuration::updateValue('PRODUCTSBYBRAND_GRID_ENABLE', $gridEnabled);
+            Configuration::updateValue('PRODUCTSBYBRAND_LIST_ENABLE', $listEnabled);
             Configuration::updateValue('PRODUCTSBYBRAND_DESKTOP_ROWS', $desktopRows);
             Configuration::updateValue('PRODUCTSBYBRAND_MOBILE_ROWS', $mobileRows);
         }
@@ -131,12 +144,48 @@ class ProductsByBrand extends Module
                         'is_bool' => true,
                         'values' => [
                             [
-                                'id' => 'active_on',
+                                'id' => 'module_active_on',
                                 'value' => 1,
                                 'label' => $this->l('Enabled')
                             ],
                             [
-                                'id' => 'active_off',
+                                'id' => 'module_active_off',
+                                'value' => 0,
+                                'label' => $this->l('Disabled')
+                            ],
+                        ],
+                    ],
+                    [
+                        'type' => 'switch',
+                        'label' => $this->l('Enable grid'),
+                        'name' => 'PRODUCTSBYBRAND_GRID_ENABLE',
+                        'is_bool' => true,
+                        'values' => [
+                            [
+                                'id' => 'grid_active_on',
+                                'value' => 1,
+                                'label' => $this->l('Enabled')
+                            ],
+                            [
+                                'id' => 'grid_active_off',
+                                'value' => 0,
+                                'label' => $this->l('Disabled')
+                            ],
+                        ],
+                    ],
+                    [
+                        'type' => 'switch',
+                        'label' => $this->l('Enable list'),
+                        'name' => 'PRODUCTSBYBRAND_LIST_ENABLE',
+                        'is_bool' => true,
+                        'values' => [
+                            [
+                                'id' => 'list_active_on',
+                                'value' => 1,
+                                'label' => $this->l('Enabled')
+                            ],
+                            [
+                                'id' => 'list_active_off',
                                 'value' => 0,
                                 'label' => $this->l('Disabled')
                             ],
@@ -172,13 +221,19 @@ class ProductsByBrand extends Module
         $helper->default_form_language = (int) Configuration::get('PS_LANG_DEFAULT');
 
         $helper->fields_value['PRODUCTSBYBRAND_MODULE_ENABLE'] = 
-        Tools::getValue('PRODUCTSBYBRAND_MODULE_ENABLE', Configuration::get('PRODUCTSBYBRAND_MODULE_ENABLE'), 1);
+        Tools::getValue('PRODUCTSBYBRAND_MODULE_ENABLE', Configuration::get('PRODUCTSBYBRAND_MODULE_ENABLE', 1));
+
+        $helper->fields_value['PRODUCTSBYBRAND_GRID_ENABLE'] = 
+        Tools::getValue('PRODUCTSBYBRAND_GRID_ENABLE', Configuration::get('PRODUCTSBYBRAND_GRID_ENABLE', 1));
+
+        $helper->fields_value['PRODUCTSBYBRAND_LIST_ENABLE'] = 
+        Tools::getValue('PRODUCTSBYBRAND_LIST_ENABLE', Configuration::get('PRODUCTSBYBRAND_LIST_ENABLE', 1));
 
         $helper->fields_value['PRODUCTSBYBRAND_DESKTOP_ROWS'] = 
-        Tools::getValue('PRODUCTSBYBRAND_DESKTOP_ROWS', Configuration::get('PRODUCTSBYBRAND_DESKTOP_ROWS'), 2);
+        Tools::getValue('PRODUCTSBYBRAND_DESKTOP_ROWS', Configuration::get('PRODUCTSBYBRAND_DESKTOP_ROWS', 2));
 
         $helper->fields_value['PRODUCTSBYBRAND_MOBILE_ROWS'] = 
-        Tools::getValue('PRODUCTSBYBRAND_MOBILE_ROWS', Configuration::get('PRODUCTSBYBRAND_MOBILE_ROWS'), 4);
+        Tools::getValue('PRODUCTSBYBRAND_MOBILE_ROWS', Configuration::get('PRODUCTSBYBRAND_MOBILE_ROWS', 4));
 
         return $helper->generateForm([$form]);
 
@@ -186,5 +241,3 @@ class ProductsByBrand extends Module
 
 
 }
-
-

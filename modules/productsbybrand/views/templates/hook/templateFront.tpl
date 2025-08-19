@@ -1,5 +1,5 @@
 
-
+{if $gridEnabled}
 <div class="brands-container">
 <div class="grid-title">Search for products by brand</div>
     <div class="brands-grid"
@@ -19,8 +19,9 @@
         <button id="toggle-brands" class="btn btn-primary brand-item toggle-btn">See more</button>
     </div>
 </div>
+{/if}
 
-
+{if $listEnabled}
 <div class="brands-by-letter-container">
     <div class="brands-by-letter-columns">
         {foreach $grouped_brands as $letter => $gBrands}
@@ -39,4 +40,4 @@
         {/foreach}
     </div>
 </div>
-
+{/if}
