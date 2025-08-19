@@ -20,13 +20,13 @@
 
 
 <div class="brands-by-letter-container">
-    <div class="brands-by-letter-grid">
+    <div class="brands-by-letter-columns">
         {foreach $grouped_brands as $letter => $gBrands}
-            <div class="letter-block">
+            <div class="brand-by-letter-group">
                 <div class="letter-header">{$letter}</div>
-                <ul class="letter-list list-unstyled">
+                <ul class="brand-list list-unstyled">
                     {foreach $gBrands as $gBrand}
-                        <li class="letter-item">{$gBrand.name}</li>
+                        <li class="brand-list-item">{$gBrand.name}</li>
                     {/foreach}
                 </ul>
             </div>
