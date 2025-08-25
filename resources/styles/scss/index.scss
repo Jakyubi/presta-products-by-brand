@@ -7,7 +7,11 @@
   display: grid;
   gap: 10px;
   width: 100%;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  }
 }
 
 .brand-image-wrapper {
@@ -53,14 +57,11 @@
   font-weight: 400;
   text-align: center;
   cursor: pointer;
+  grid-column: 1/-1;
 
   &:hover {
     background: #dfdfdf;
     color: #000;
-  }
-
-  @media (max-width: 768px) {
-    grid-column: 1/-1;
   }
 
   @media (min-width: 769px) {
@@ -74,12 +75,6 @@
   padding: 10px;
 }
 
-.brands-grid {
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-  }
-}
-
 .brands-by-letter-container {
   display: flex;
   justify-content: center;
@@ -89,9 +84,19 @@
 
 .brands-by-letter-columns {
   display: inline-block;
-  column-count: 5;
-  column-gap: 20px;
+  column-count: 2;
+  column-gap: 15px;
   text-align: left;
+
+  @media (min-width: 550px) {
+    column-count: 3;
+  }
+  @media (min-width: 768px) {
+    column-count: 4;
+  }
+  @media (min-width: 1024px) {
+    column-count: 5;
+  }
 }
 
 .brand-by-letter-group {
@@ -123,19 +128,5 @@
     &:hover {
       color: #00c9c9;
     }
-  }
-}
-
-.brands-by-letter-columns {
-  @media (max-width: 1024px) {
-    column-count: 4;
-    column-gap: 15px;
-  }
-  @media (max-width: 768px) {
-    column-count: 3;
-    column-gap: 15px;
-  }
-  @media (max-width: 550px) {
-    column-count: 2;
   }
 }
