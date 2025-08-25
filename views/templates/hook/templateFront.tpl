@@ -16,7 +16,7 @@
         </div>
         {/foreach}
 
-        <button id="toggle-brands" class="btn btn-primary brand-item toggle-btn">See more</button>
+        <button id="toggle-brands" class="btn brand-item toggle-btn">See more</button>
     </div>
 </div>
 {/if}
