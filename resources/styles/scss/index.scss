@@ -1,32 +1,27 @@
 .brands-container {
-    width: 100%;
-    box-sizing: border-box;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.brands-grid{
-    display: grid;
-    gap: 10px;
-    width: 100%;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+.brands-grid {
+  display: grid;
+  gap: 10px;
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
 }
 
 .brand-image-wrapper {
-    width: 100%;
-    padding-top: 100%;
-    position: relative;
-    border: 1px solid rgb(201,201,201);
-    background: #fff;
-    font-size: 14px;
-    overflow: hidden;
-    color: #666;
-    transition: filter 0.3s ease
-}
+  width: 100%;
+  padding-top: 100%;
+  position: relative;
+  border: 1px solid rgb(201, 201, 201);
+  background: #fff;
+  font-size: 14px;
+  overflow: hidden;
+  color: #666;
+  transition: filter 0.3s ease;
 
-.brand-image-wrapper:hover{
-    filter: brightness(1.15);
-}
-
-.brand-image-wrapper img{
+  img {
     position: absolute;
     max-width: 80%;
     max-height: 80%;
@@ -34,120 +29,113 @@
     left: 50%;
     transform: translate(-50%, -50%);
     object-fit: contain;
+  }
+
+  &:hover {
+    filter: brightness(1.15);
+  }
 }
 
 .brand-item {
-    width: 100%;
-}
+  width: 100%;
 
-
-.brand-item.hidden {
+  &.hidden {
     display: none;
+  }
 }
 
-.toggle-btn{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: transparent;
-    color: #000;
-    font-weight: 400;
-    text-align: center;
-    cursor: pointer;
-}
-.toggle-btn:hover {
+.toggle-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  color: #000;
+  font-weight: 400;
+  text-align: center;
+  cursor: pointer;
+
+  &:hover {
     background: #dfdfdf;
     color: #000;
+  }
+
+  @media (max-width: 768px) {
+    grid-column: 1/-1;
+  }
+
+  @media (min-width: 769px) {
+    grid-column: span 2;
+  }
 }
 
-.grid-title{
-    font-size: 20px;
-    font-weight: 500;
-    padding: 10px;
+.grid-title {
+  font-size: 20px;
+  font-weight: 500;
+  padding: 10px;
 }
 
-@media (max-width: 768px){
-    .brands-grid{
-        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-    }
-    .toggle-btn{
-        grid-column: 1/-1;
-    }
+.brands-grid {
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  }
 }
 
-@media (min-width: 769px){
-    .toggle-btn{
-        grid-column: span 2;
-    }
-}
-
-
-
-
-
-
-.brands-by-letter-container{
-    display: flex;
-    justify-content: center ;
-    text-align: center;
-    margin-top: 40px;
+.brands-by-letter-container {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-top: 40px;
 }
 
 .brands-by-letter-columns {
-    display: inline-block;
-    column-count: 5;
-    column-gap: 20px; 
-    text-align: left;
+  display: inline-block;
+  column-count: 5;
+  column-gap: 20px;
+  text-align: left;
 }
 
-.brand-by-letter-group{
-    break-inside: auto;
-    margin-bottom: 20px;
+.brand-by-letter-group {
+  break-inside: auto;
+  margin-bottom: 20px;
 }
 
 .letter-header {
-    font-size: 40px;
-    color: #000;
-    margin-bottom: 15px;
+  font-size: 40px;
+  color: #000;
+  margin-bottom: 15px;
 }
 
 .brand-list {
-    color: #666;
-    padding-left: 0;
-    margin: 0;
-    margin-bottom: 30px;
+  color: #666;
+  padding-left: 0;
+  margin: 0;
+  margin-bottom: 30px;
 }
 
 .brand-list-item {
-    line-height: 2em;   
-}
+  line-height: 2em;
 
-.brand-list-item a{
-    color:#666;
+  a {
+    color: #666;
     text-decoration: none;
-    transition: color 0.3s ease
-}
+    transition: color 0.3s ease;
 
-.brand-list-item a:hover {
-    color: #00c9c9;
-}
-
-@media (max-width: 1024px){
-    .brands-by-letter-columns{
-        column-count: 4;
-        column-gap: 15px;
+    &:hover {
+      color: #00c9c9;
     }
+  }
 }
 
-@media (max-width: 768px){
-    .brands-by-letter-columns{
-        column-count: 3;
-        column-gap: 15px;
-    }
-}
-
-@media (max-width: 550px){
-    .brands-by-letter-columns{
-        column-count: 2;
-    }
+.brands-by-letter-columns {
+  @media (max-width: 1024px) {
+    column-count: 4;
+    column-gap: 15px;
+  }
+  @media (max-width: 768px) {
+    column-count: 3;
+    column-gap: 15px;
+  }
+  @media (max-width: 550px) {
+    column-count: 2;
+  }
 }
