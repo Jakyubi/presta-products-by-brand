@@ -211,32 +211,41 @@ class ProductsByBrand extends Module
         ];
 
 
+
+        $helper = $this->getHelperForm();
+        $helper->fields_value = $this->getFormValues();
+
+        return $helper->generateForm([$form]);
+    }
+
+    public function getFormValues()
+    {
+        $defaults = [
+            'PRODUCTSBYBRAND_MODULE_ENABLE' => 1,
+            'PRODUCTSBYBRAND_GRID_ENABLE' => 1,
+            'PRODUCTSBYBRAND_LIST_ENABLE' => 1,
+            'PRODUCTSBYBRAND_DESKTOP_ROWS' => 2,
+            'PRODUCTSBYBRAND_MOBILE_ROWS' => 4,
+        ];
+
+        $values = [];
+        foreach($defaults as $key => $default){
+            $values[$key] = Tools::getValue($key, Configuration::get($key, $default));
+        }
+
+        return $values;
+    }
+
+    public function getHelperForm()
+    {
         $helper = new HelperForm();
-        
         $helper->table = $this->table;
         $helper->name_controller = $this->name;
         $helper->token = Tools::getAdminTokenLite('AdminModules');
         $helper->currentIndex = AdminController::$currentIndex . '&' . http_build_query(['configure' => $this->name]);
         $helper->submit_action = 'submitProductsbybrandSettingsForm';
         $helper->default_form_language = (int) Configuration::get('PS_LANG_DEFAULT');
-
-        $helper->fields_value['PRODUCTSBYBRAND_MODULE_ENABLE'] = 
-        Tools::getValue('PRODUCTSBYBRAND_MODULE_ENABLE', Configuration::get('PRODUCTSBYBRAND_MODULE_ENABLE', 1));
-
-        $helper->fields_value['PRODUCTSBYBRAND_GRID_ENABLE'] = 
-        Tools::getValue('PRODUCTSBYBRAND_GRID_ENABLE', Configuration::get('PRODUCTSBYBRAND_GRID_ENABLE', 1));
-
-        $helper->fields_value['PRODUCTSBYBRAND_LIST_ENABLE'] = 
-        Tools::getValue('PRODUCTSBYBRAND_LIST_ENABLE', Configuration::get('PRODUCTSBYBRAND_LIST_ENABLE', 1));
-
-        $helper->fields_value['PRODUCTSBYBRAND_DESKTOP_ROWS'] = 
-        Tools::getValue('PRODUCTSBYBRAND_DESKTOP_ROWS', Configuration::get('PRODUCTSBYBRAND_DESKTOP_ROWS', 2));
-
-        $helper->fields_value['PRODUCTSBYBRAND_MOBILE_ROWS'] = 
-        Tools::getValue('PRODUCTSBYBRAND_MOBILE_ROWS', Configuration::get('PRODUCTSBYBRAND_MOBILE_ROWS', 4));
-
-        return $helper->generateForm([$form]);
-
+        return $helper;
     }
 
 
