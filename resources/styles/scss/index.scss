@@ -1,3 +1,4 @@
+// grid
 .brands-container {
   width: 100%;
   box-sizing: border-box;
@@ -55,15 +56,13 @@
   background: transparent;
   color: #000;
   text-align: center;
-  cursor: pointer;
   grid-column: 1/-1;
 
   &:hover {
     background: #dfdfdf;
-    color: #000;
   }
 
-  @media (min-width: 769px) {
+  @media (min-width: 768px) {
     grid-column: span 2;
   }
 }
@@ -74,6 +73,7 @@
   padding: 0.625rem;
 }
 
+// letter list
 .brands-by-letter-container {
   display: flex;
   justify-content: center;
@@ -99,7 +99,6 @@
 }
 
 .brand-by-letter-group {
-  break-inside: auto;
   margin-bottom: 1.25rem;
 }
 
