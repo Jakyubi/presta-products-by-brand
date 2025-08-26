@@ -94,6 +94,9 @@ $brand-min-col: 100px;
   @media (min-width: 1024px) {
     column-count: 5;
   }
+  @media (min-width: 1440px) {
+    column-count: 6;
+  }
 }
 
 .brand-by-letter-group {
