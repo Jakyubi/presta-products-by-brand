@@ -15,10 +15,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (window.innerWidth < 768) {
       visibleCount = columns * mobileRows;
-      button.style.gridColumn = '1 / -1';
     } else {
       visibleCount = columns * desktopRows - 2;
-      button.style.gridColumn = `span 2`;
     }
 
     let hiddenCount = 0;
