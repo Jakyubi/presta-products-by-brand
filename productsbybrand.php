@@ -210,8 +210,6 @@ class ProductsByBrand extends Module
             ],
         ];
 
-
-
         $helper = $this->getHelperForm();
         $helper->fields_value = $this->getFormValues();
 
@@ -247,6 +245,4 @@ class ProductsByBrand extends Module
         $helper->default_form_language = (int) Configuration::get('PS_LANG_DEFAULT');
         return $helper;
     }
-
-
 }
