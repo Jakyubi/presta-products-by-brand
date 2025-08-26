@@ -1,4 +1,6 @@
 // grid
+$brand-min-col: 100px;
+
 .brands-container {
   width: 100%;
   box-sizing: border-box;
@@ -8,11 +10,7 @@
   display: grid;
   gap: 0.625rem;
   width: 100%;
-  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-
-  @media (min-width: 768px) {
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  }
+  grid-template-columns: repeat(auto-fit, minmax($brand-min-col, 1fr));
 }
 
 .brand-image-wrapper {
