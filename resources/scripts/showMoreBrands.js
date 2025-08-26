@@ -1,64 +1,64 @@
-document.addEventListener('DOMContentLoaded', function(){
-    const grid = document.querySelector('.brands-grid');
-    const desktopRows = parseInt(grid.dataset.desktopRows, 10);
-    const mobileRows = parseInt(grid.dataset.mobileRows, 10);
-    const button = document.getElementById('toggle-brands');
-    let showingAll = false;
+document.addEventListener('DOMContentLoaded', function () {
+  const grid = document.querySelector('.brands-grid');
+  const desktopRows = parseInt(grid.dataset.desktopRows, 10);
+  const mobileRows = parseInt(grid.dataset.mobileRows, 10);
+  const button = document.getElementById('toggle-brands');
+  let showingAll = false;
 
-    function updateVisibility(){
-        const items = Array.from(document.querySelectorAll('.brands-grid .brand-item'));
-        const gridStyle = getComputedStyle(grid);
-        const columns = gridStyle.gridTemplateColumns.split(' ').length;
-        let visibleCount;
+  function updateVisibility() {
+    const items = Array.from(
+      document.querySelectorAll('.brands-grid .brand-item')
+    );
+    const gridStyle = getComputedStyle(grid);
+    const columns = gridStyle.gridTemplateColumns.split(' ').length;
+    let visibleCount;
 
-        if(window.innerWidth < 768){
-            visibleCount = columns * mobileRows;
-            button.style.gridColumn = '1 / -1';
-        }else{
-            visibleCount = columns * desktopRows - 2;
-            button.style.gridColumn = `span 2`;
-        }
-
-        let hiddenCount = 0;
-
-        items.forEach((el, index) => {
-            if(el.id === 'toggle-brands') return;
-            if(!showingAll && index >= visibleCount){
-                el.classList.add('hidden');
-                hiddenCount++;
-            }else{
-                el.classList.remove('hidden');
-            }
-        });
-
-        if(!showingAll){
-            if(window.innerWidth >= 768){
-                const lastVisible = items[visibleCount - 1];
-                if(lastVisible) grid.insertBefore(button, lastVisible.nextSibling);
-            }else{
-                grid.appendChild(button);
-            }
-        }else{
-            grid.appendChild(button);
-        }
-
-        if(showingAll){
-            button.textContent = 'Show less';
-        } else {
-            button.textContent = `See more (${hiddenCount})`;
-        }
+    if (window.innerWidth < 768) {
+      visibleCount = columns * mobileRows;
+      button.style.gridColumn = '1 / -1';
+    } else {
+      visibleCount = columns * desktopRows - 2;
+      button.style.gridColumn = `span 2`;
     }
 
-  
+    let hiddenCount = 0;
+
+    items.forEach((el, index) => {
+      if (el.id === 'toggle-brands') return;
+      if (!showingAll && index >= visibleCount) {
+        el.classList.add('hidden');
+        hiddenCount++;
+      } else {
+        el.classList.remove('hidden');
+      }
+    });
+
+    if (!showingAll) {
+      if (window.innerWidth >= 768) {
+        const lastVisible = items[visibleCount - 1];
+        if (lastVisible) grid.insertBefore(button, lastVisible.nextSibling);
+      } else {
+        grid.appendChild(button);
+      }
+    } else {
+      grid.appendChild(button);
+    }
+
+    if (showingAll) {
+      button.textContent = 'Show less';
+    } else {
+      button.textContent = `See more (${hiddenCount})`;
+    }
+  }
+
+  updateVisibility();
+
+  button.addEventListener('click', function () {
+    showingAll = !showingAll;
     updateVisibility();
+  });
 
-    button.addEventListener('click', function() {
-        showingAll = !showingAll;
-        updateVisibility();
-    });
-
-    window.addEventListener('resize', function(){
-
-        if(!showingAll) updateVisibility();
-    });
+  window.addEventListener('resize', function () {
+    if (!showingAll) updateVisibility();
+  });
 });
