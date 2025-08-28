@@ -1,0 +1,59 @@
+@use 'variables';
+
+.grid-title {
+  font-size: variables.$font-medium;
+  font-weight: 500;
+  padding: 0.625rem;
+}
+
+.brand-item {
+  width: 100%;
+
+  &.hidden {
+    display: none;
+  }
+}
+
+.brand-image-wrapper {
+  width: 100%;
+  padding-top: 100%;
+  position: relative;
+  border: 1px solid variables.$color-border;
+  background: variables.$color-white;
+  font-size: variables.$font-small;
+  overflow: hidden;
+  color: variables.$color-gray;
+  transition: filter 0.3s ease;
+
+  img {
+    position: absolute;
+    max-width: 80%;
+    max-height: 80%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    object-fit: contain;
+  }
+
+  &:hover {
+    filter: brightness(1.15);
+  }
+}
+
+.toggle-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  color: variables.$color-black;
+  text-align: center;
+  grid-column: 1/-1;
+
+  &:hover {
+    background: variables.$color-gray-light;
+  }
+
+  @media (min-width: 768px) {
+    grid-column: span 2;
+  }
+}
