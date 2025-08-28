@@ -51,9 +51,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   updateVisibility();
 
+  const scrollY = window.scrollY;
   button.addEventListener('click', function () {
     showingAll = !showingAll;
     updateVisibility();
+
+    window.scrollTo({ top: scrollY, behavior: 'smooth' });
+    button.focus();
   });
 
   window.addEventListener('resize', function () {
