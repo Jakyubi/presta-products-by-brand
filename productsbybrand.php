@@ -3,8 +3,13 @@ if(!defined('_PS_VERSION_')){
     exit;
 }
 
+require_once __DIR__.'/vendor/autoload.php';
+
+use ProductsByBrandModule\FormHandler;
+
 class ProductsByBrand extends Module
 {
+    public $formHandler;
 
     public function __construct()
     {
@@ -28,6 +33,8 @@ class ProductsByBrand extends Module
         if(!Configuration::get('PRODUCTSBYBRAND_MODULE_NAME')){
             $this->warning = $this->trans('No name provided', [], 'Modules.Productsbybrand.Admin');
         }
+
+        $this->formHandler = new FormHandler($this);
 
     }
 
@@ -100,8 +107,8 @@ class ProductsByBrand extends Module
             'gridEnabled' => (int) Configuration::get('PRODUCTSBYBRAND_GRID_ENABLE', 1), 
             'listEnabled' => (int) Configuration::get('PRODUCTSBYBRAND_LIST_ENABLE', 1), 
         ]);
-        return $this->display(__FILE__, 'views/templates/hook/templateFront.tpl');
 
+        return $this->display(__FILE__, 'views/templates/hook/templateFront.tpl');
     }
 
 
@@ -123,126 +130,24 @@ class ProductsByBrand extends Module
         }
 
         $this->context->smarty->assign([
-            'displayForm' => $this->displayForm(),
+            'displayForm' => $this->formHandler->displayForm(),
         ]);
 
         return $this->display(__FILE__, 'views/templates/admin/configure.tpl');
     }
 
-    public function displayForm()
+    public function getContext()
     {
-        $form = [
-            'form' => [
-                'legend' => [
-                    'title' => $this->l('Settings'),
-                ],
-                'input' => [
-                    [
-                        'type' => 'switch',
-                        'label' => $this->l('Enable module'),
-                        'name' => 'PRODUCTSBYBRAND_MODULE_ENABLE',
-                        'is_bool' => true,
-                        'values' => [
-                            [
-                                'id' => 'module_active_on',
-                                'value' => 1,
-                                'label' => $this->l('Enabled')
-                            ],
-                            [
-                                'id' => 'module_active_off',
-                                'value' => 0,
-                                'label' => $this->l('Disabled')
-                            ],
-                        ],
-                    ],
-                    [
-                        'type' => 'switch',
-                        'label' => $this->l('Enable grid'),
-                        'name' => 'PRODUCTSBYBRAND_GRID_ENABLE',
-                        'is_bool' => true,
-                        'values' => [
-                            [
-                                'id' => 'grid_active_on',
-                                'value' => 1,
-                                'label' => $this->l('Enabled')
-                            ],
-                            [
-                                'id' => 'grid_active_off',
-                                'value' => 0,
-                                'label' => $this->l('Disabled')
-                            ],
-                        ],
-                    ],
-                    [
-                        'type' => 'switch',
-                        'label' => $this->l('Enable list'),
-                        'name' => 'PRODUCTSBYBRAND_LIST_ENABLE',
-                        'is_bool' => true,
-                        'values' => [
-                            [
-                                'id' => 'list_active_on',
-                                'value' => 1,
-                                'label' => $this->l('Enabled')
-                            ],
-                            [
-                                'id' => 'list_active_off',
-                                'value' => 0,
-                                'label' => $this->l('Disabled')
-                            ],
-                        ],
-                    ],
-                    [
-                        'type' => 'text',
-                        'label' => $this->l('Visible rows on desktop'),
-                        'name' => 'PRODUCTSBYBRAND_DESKTOP_ROWS',
-                    ],
-                    [
-                        'type' => 'text',
-                        'label' => $this->l('Visible rows on mobile'),
-                        'name' => 'PRODUCTSBYBRAND_MOBILE_ROWS',
-                    ],
-                ],
-                'submit' => [
-                    'title' => $this->l('Save'),
-                    'class' => 'btn btn-default pull-right',
-                    'name' => 'submitProductsbybrandSettingsForm',
-                ],
-            ],
-        ];
-
-        $helper = $this->getHelperForm();
-        $helper->fields_value = $this->getFormValues();
-
-        return $helper->generateForm([$form]);
+        return $this->context;
     }
 
-    public function getFormValues()
+    public function getTable() 
     {
-        $defaults = [
-            'PRODUCTSBYBRAND_MODULE_ENABLE' => 1,
-            'PRODUCTSBYBRAND_GRID_ENABLE' => 1,
-            'PRODUCTSBYBRAND_LIST_ENABLE' => 1,
-            'PRODUCTSBYBRAND_DESKTOP_ROWS' => 2,
-            'PRODUCTSBYBRAND_MOBILE_ROWS' => 4,
-        ];
-
-        $values = [];
-        foreach($defaults as $key => $default){
-            $values[$key] = Tools::getValue($key, Configuration::get($key, $default));
-        }
-
-        return $values;
+        return $this->table;
     }
 
-    public function getHelperForm()
+    public function getName()
     {
-        $helper = new HelperForm();
-        $helper->table = $this->table;
-        $helper->name_controller = $this->name;
-        $helper->token = Tools::getAdminTokenLite('AdminModules');
-        $helper->currentIndex = AdminController::$currentIndex . '&' . http_build_query(['configure' => $this->name]);
-        $helper->submit_action = 'submitProductsbybrandSettingsForm';
-        $helper->default_form_language = (int) Configuration::get('PS_LANG_DEFAULT');
-        return $helper;
+        return $this->name;
     }
 }
