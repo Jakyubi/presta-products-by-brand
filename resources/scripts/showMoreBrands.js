@@ -1,29 +1,42 @@
-document.addEventListener('DOMContentLoaded', function () {
-  const grid = document.querySelector('.brands-grid');
-  const desktopRows = parseInt(grid.dataset.desktopRows, 10);
-  const mobileRows = parseInt(grid.dataset.mobileRows, 10);
-  const button = document.getElementById('toggle-brands');
-  let showingAll = false;
+class BrandsGrid {
+  constructor() {
+    this.grid = document.querySelector('.brands-grid');
+    if (!this.grid) return;
+    this.desktopRows = parseInt(this.grid.dataset.desktopRows, 10);
+    this.mobileRows = parseInt(this.grid.dataset.mobileRows, 10);
+    this.button = document.getElementById('toggle-brands');
+    this.showingAll = false;
+    this.scrollY = window.scrollY;
+    this.updateVisibility();
 
-  function updateVisibility() {
+    if (this.button) {
+      this.button.addEventListener('click', () => this.onButtonClick());
+    }
+
+    window.addEventListener('resize', () => {
+      if (!this.showingAll) this.updateVisibility();
+    });
+  }
+
+  updateVisibility() {
     const items = Array.from(
       document.querySelectorAll('.brands-grid .brand-item')
     );
-    const gridStyle = getComputedStyle(grid);
+    const gridStyle = getComputedStyle(this.grid);
     const columns = gridStyle.gridTemplateColumns.split(' ').length;
     let visibleCount;
 
     if (window.innerWidth < 768) {
-      visibleCount = columns * mobileRows;
+      visibleCount = columns * this.mobileRows;
     } else {
-      visibleCount = columns * desktopRows - 2;
+      visibleCount = columns * this.desktopRows - 2;
     }
 
     let hiddenCount = 0;
 
     items.forEach((el, index) => {
       if (el.id === 'toggle-brands') return;
-      if (!showingAll && index >= visibleCount) {
+      if (!this.showingAll && index >= visibleCount) {
         el.classList.add('hidden');
         hiddenCount++;
       } else {
@@ -31,36 +44,34 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
-    if (!showingAll) {
+    if (!this.showingAll) {
       if (window.innerWidth >= 768) {
         const lastVisible = items[visibleCount - 1];
-        if (lastVisible) grid.insertBefore(button, lastVisible.nextSibling);
+        if (lastVisible)
+          this.grid.insertBefore(this.button, lastVisible.nextSibling);
       } else {
-        grid.appendChild(button);
+        this.grid.appendChild(this.button);
       }
     } else {
-      grid.appendChild(button);
+      this.grid.appendChild(this.button);
     }
 
-    if (showingAll) {
-      button.textContent = 'Show less';
+    if (this.showingAll) {
+      this.button.textContent = 'Show less';
     } else {
-      button.textContent = `See more (${hiddenCount})`;
+      this.button.textContent = `See more (${hiddenCount})`;
     }
   }
 
-  updateVisibility();
+  onButtonClick() {
+    this.showingAll = !this.showingAll;
+    this.updateVisibility();
 
-  const scrollY = window.scrollY;
-  button.addEventListener('click', function () {
-    showingAll = !showingAll;
-    updateVisibility();
+    window.scrollTo({ top: this.scrollY, behavior: 'smooth' });
+    this.button.focus();
+  }
+}
 
-    window.scrollTo({ top: scrollY, behavior: 'smooth' });
-    button.focus();
-  });
-
-  window.addEventListener('resize', function () {
-    if (!showingAll) updateVisibility();
-  });
+document.addEventListener('DOMContentLoaded', () => {
+  new BrandsGrid();
 });
